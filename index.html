@@ -491,7 +491,33 @@ footer b { color: var(--txt2); font-weight: 500; }
 
 @media (max-width: 720px) {
   .cd-grid { grid-template-columns: minmax(0, 1fr); }
+  .gs-grid { grid-template-columns: minmax(0, 1fr); }
 }
+
+/* ============ GSAP Skills ============ */
+.gs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 14px; }
+.gs-card {
+  display: flex; flex-direction: column; border-radius: 14px; padding: 18px;
+  background: linear-gradient(rgba(13,13,22,.92), rgba(10,10,17,.92)) padding-box,
+    linear-gradient(155deg, rgba(139,92,246,.35), rgba(34,211,238,.18) 55%, rgba(255,255,255,.05)) border-box;
+  border: 1px solid transparent;
+  transition: transform .3s cubic-bezier(.2,.7,.3,1), box-shadow .3s;
+}
+.gs-card:hover { transform: translateY(-4px); box-shadow: 0 24px 50px -24px rgba(139,92,246,.35); }
+.gs-card h3 { font-size: 15px; font-weight: 600; display: flex; align-items: baseline; gap: 9px; flex-wrap: wrap; }
+.gs-card h3 .k { font-family: "Space Grotesk", monospace; font-size: 11px; color: #a78bfa; }
+.gs-card p { font-size: 12.5px; color: var(--txt2); line-height: 1.55; margin: 8px 0 0; }
+.gs-card pre {
+  margin: 12px 0 0; background: rgba(0,0,0,.42); border: 1px solid rgba(255,255,255,.07);
+  border-radius: 9px; padding: 11px 13px; overflow-x: auto;
+  font-size: 10.8px; line-height: 1.6; color: #c9d4e3; font-family: "SF Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+.gs-card pre::-webkit-scrollbar { height: 5px; }
+.gs-card pre::-webkit-scrollbar-thumb { background: #ffffff22; border-radius: 3px; }
+.gs-card .gs-meta { margin-top: auto; padding-top: 12px; display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.gs-card .gs-size { font-size: 10.5px; color: var(--txt3); }
+.gs-card .gs-link { font-size: 11.5px; color: #7ee7f5; }
+.gs-card .gs-link:hover { text-decoration: underline; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
@@ -577,6 +603,21 @@ footer b { color: var(--txt2); font-weight: 500; }
     </div>
     <div class="cd-grid" id="cdGrid"></div>
     <p class="cd-more" id="cdMore"></p>
+  </section>
+
+  <!-- ============ GSAP AI Skills ============ -->
+  <section id="gsap" style="margin-top:70px;">
+    <div class="sec-head">
+      <span class="eyebrow">GSAP SKILLS</span>
+      <h2>GSAP 官方 AI Skills</h2>
+      <span class="sec-count">8 个 skill · greensock 官方出品 · 16k★</span>
+    </div>
+    <p style="color:var(--txt2);font-size:13.5px;max-width:820px;margin:-8px 0 24px;">
+      GSAP（GreenSock Animation Platform）是业界标准的 JS 动画库——上面组件库里一半的高级动效都是它驱动的。
+      这套官方 skill 教 <b>AI 编程助手</b>正确使用 GSAP：装进 Claude Code / Cursor / Copilot 后，
+      AI 写动画就自带官方最佳实践。装法：<code style="color:#7ee7f5;">npx skills add greensock/gsap-skills</code> 或克隆到 <code style="color:#7ee7f5;">~/.claude/skills/</code>。
+    </p>
+    <div class="gs-grid" id="gsGrid"></div>
   </section>
 </main>
 
@@ -854,6 +895,19 @@ function buildCdTabs() {
 
 buildCdTabs();
 cdRender(true);
+
+/* ---------- GSAP Skills ---------- */
+const GS = [{"k":"gsap-core","cn":"核心 API","desc":"gsap.to() / from() / fromTo()、easing、duration、stagger、defaults、gsap.matchMedia() 响应式与减弱动效","code":"gsap.to(\".box\", { x: 100, rotation: \"360_cw\", duration: 1 });\ngsap.to(\".fade\", { autoAlpha: 0, duration: 0.5, clearProps: \"visibility\" });\ngsap.to(svgEl, { rotation: 90, svgOrigin: \"100 100\" });","size":14678},{"k":"gsap-timeline","cn":"时间轴编排","desc":"时间线序列、position 参数、labels、嵌套时间线、播放控制（暂停/倒放/跳转）","code":"const tl = gsap.timeline();\ntl.to(\".a\", { x: 100, duration: 1 })\n  .to(\".b\", { y: 50, duration: 0.5 })\n  .to(\".c\", { opacity: 0, duration: 0.3 });","size":4338},{"k":"gsap-scrolltrigger","cn":"滚动驱动动画","desc":"scroll-linked 动画、pin 钉住、scrub 擦洗、触发器、refresh 与清理","code":"gsap.registerPlugin(ScrollTrigger);","size":18298},{"k":"gsap-plugins","cn":"全部插件指南","desc":"ScrollSmoother、Flip、Draggable、Inertia、Observer、SplitText、MorphSVG、DrawSVG、MotionPath、CustomEase 等","code":"import gsap from \"gsap\";\nimport { ScrollToPlugin } from \"gsap/ScrollToPlugin\";\nimport { Flip } from \"gsap/Flip\";\nimport { Draggable } from \"gsap/Draggable\";\n\ngsap.registerPlugin(ScrollToPlugin, Flip, Draggable);","size":21477},{"k":"gsap-utils","cn":"工具函数库","desc":"clamp、mapRange、normalize、interpolate、random、snap、toArray、selector、wrap、pipe","code":"// With value: returns the result\ngsap.utils.clamp(0, 100, 150); // 100\n\n// Without value: returns a function you call with the value later\nlet c = gsap.utils.clamp(0, 100);\nc(150);  // 100\nc(-10);  // 0","size":12051},{"k":"gsap-react","cn":"React 集成","desc":"useGSAP hook、refs、gsap.context()、cleanup 清理、SSR 服务端渲染","code":"import { useGSAP } from \"@gsap/react\";\n\ngsap.registerPlugin(useGSAP); // register before running useGSAP or any GSAP code\n\nconst containerRef = useRef(null);\n\nuseGSAP(() => {\n  gsap.to(\".box\", { x: 100 });\n  gsap.from(\".item\", { opacity: 0, stagger: 0.1 });\n}, { scope: containerRef });","size":6530},{"k":"gsap-performance","cn":"性能优化","desc":"transform 优先于布局属性、will-change、批处理、ScrollTrigger 性能技巧","code":"let xTo = gsap.quickTo(\"#id\", \"x\", { duration: 0.4, ease: \"power3\" }),\n    yTo = gsap.quickTo(\"#id\", \"y\", { duration: 0.4, ease: \"power3\" });\n\ndocument.querySelector(\"#container\").addEventListener(\"mousemove\", (e) => {\n  xTo(e.pageX);\n  yTo(e.pageY);\n});","size":4105},{"k":"gsap-frameworks","cn":"Vue/Svelte 等框架","desc":"生命周期、作用域选择器、卸载时清理","code":"import { onMounted, onUnmounted, ref } from \"vue\";\nimport { gsap } from \"gsap\";\nimport { ScrollTrigger } from \"gsap/ScrollTrigger\";\ngsap.registerPlugin(ScrollTrigger); // once per app, e.g. in main.js\n\nexport default {\n  setup() {\n    const container = ref(null);\n    let ctx;\n\n    onMounted(() => {\n      if (!container.value) return;\n      ctx = gsap.context(() => {\n        gsap.to(\".box\", { x: 10","size":10563}];
+$('gsGrid').innerHTML = GS.map(s => `
+  <article class="gs-card">
+    <h3>${esc(s.cn)}<span class="k">${s.k}</span></h3>
+    <p>${esc(s.desc)}</p>
+    ${s.code ? `<pre>${esc(s.code)}</pre>` : ''}
+    <div class="gs-meta">
+      <span class="gs-size">${(s.size/1024).toFixed(1)} KB · SKILL.md</span>
+      <a class="gs-link" href="https://github.com/greensock/gsap-skills/blob/main/skills/${s.k}/SKILL.md" target="_blank" rel="noopener">查看全文 ↗</a>
+    </div>
+  </article>`).join('');
 
 /* ---------- 跑马灯 ---------- */
 (function buildMarquee() {

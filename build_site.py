@@ -113,6 +113,7 @@ out = (tpl
     .replace('__ACE_JSON__', js_json(ace))
     .replace('__MAG_JSON__', js_json(mag))
     .replace('__CD_JSON__', js_json(cd))
+    .replace('__GS_JSON__', js_json(json.load(open('/tmp/gsap_skills_data.json'))))
     .replace('__CAT_JSON__', js_json([{'k': k, 'n': n} for k, n in cat_meta])))
 
 path = os.path.join(BASE, 'index.html')
