@@ -443,6 +443,56 @@ footer b { color: var(--txt2); font-weight: 500; }
   .stats { gap: 22px 34px; }
   #toTop { right: 16px; bottom: 16px; }
 }
+/* ============ Codrops 教程库 ============ */
+.cd-filters { display: flex; flex-direction: column; gap: 10px; margin: 20px 0 26px; }
+.cd-tabs, .cd-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+.cd-tabs button {
+  background: rgba(255,255,255,.05); border: 1px solid var(--border); color: var(--txt2);
+  border-radius: 10px; padding: 7px 14px; font-size: 13px; font-weight: 500; transition: all .2s;
+}
+.cd-tabs button.on {
+  background: linear-gradient(135deg, rgba(139,92,246,.25), rgba(34,211,238,.15));
+  border-color: rgba(139,92,246,.55); color: #fff;
+}
+.cd-tabs button:hover { border-color: var(--border-hi); color: var(--txt); }
+.cd-tags button {
+  background: transparent; border: 1px solid rgba(255,255,255,.07); color: var(--txt3);
+  border-radius: 99px; padding: 3px 11px; font-size: 11.5px; transition: all .2s;
+}
+.cd-tags button.on { color: #22d3ee; border-color: rgba(34,211,238,.5); background: rgba(34,211,238,.07); }
+.cd-tags button:hover { color: var(--txt2); border-color: var(--border-hi); }
+.cd-search {
+  background: rgba(255,255,255,.045); border: 1px solid var(--border); border-radius: 12px;
+  color: var(--txt); font-size: 13.5px; padding: 10px 16px; outline: none; width: 100%; max-width: 420px;
+  transition: border-color .2s, box-shadow .2s;
+}
+.cd-search:focus { border-color: rgba(139,92,246,.5); box-shadow: 0 0 0 3px rgba(139,92,246,.12); }
+.cd-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
+.cd-card {
+  display: flex; flex-direction: column; border-radius: 14px; overflow: hidden;
+  background: linear-gradient(rgba(13,13,22,.92), rgba(10,10,17,.92)) padding-box,
+    linear-gradient(155deg, rgba(34,211,238,.3), rgba(139,92,246,.14) 50%, rgba(255,255,255,.04)) border-box;
+  border: 1px solid transparent;
+  transition: transform .3s cubic-bezier(.2,.7,.3,1), box-shadow .3s;
+}
+.cd-card:hover { transform: translateY(-4px); box-shadow: 0 24px 50px -24px rgba(34,211,238,.28), 0 10px 24px -12px rgba(0,0,0,.7); }
+.cd-card .cd-thumb { position: relative; aspect-ratio: 4/3; overflow: hidden; background: #0d0d16; }
+.cd-card .cd-thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s cubic-bezier(.2,.7,.3,1); }
+.cd-card:hover .cd-thumb img { transform: scale(1.05); }
+.cd-card .cd-body { padding: 12px 14px 14px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
+.cd-card h3 { font-size: 13.5px; font-weight: 600; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.cd-card .cd-desc { font-size: 11.5px; color: var(--txt2); line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: 34px; }
+.cd-card .cd-foot { margin-top: auto; display: flex; align-items: center; justify-content: space-between; gap: 8px; padding-top: 6px; }
+.cd-card .cd-tagrow { display: flex; gap: 5px; flex-wrap: wrap; }
+.cd-card .cd-tagrow span { font-size: 9.5px; color: var(--txt3); background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.07); padding: 1px 7px; border-radius: 99px; }
+.cd-card .cd-date { font-size: 10px; color: var(--txt3); white-space: nowrap; }
+.cd-card .cd-cat-badge { position: absolute; left: 10px; top: 10px; z-index: 2; font-size: 10px; font-weight: 600; letter-spacing: .04em; padding: 3px 9px; border-radius: 99px; background: rgba(5,5,10,.72); backdrop-filter: blur(8px); border: 1px solid rgba(34,211,238,.35); color: #7ee7f5; }
+.cd-more { text-align: center; color: var(--txt3); font-size: 12px; margin-top: 18px; }
+
+@media (max-width: 720px) {
+  .cd-grid { grid-template-columns: minmax(0, 1fr); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
 }
@@ -512,10 +562,26 @@ footer b { color: var(--txt2); font-weight: 500; }
     <div class="alt-head"><b>Magic UI</b><span>77 个 · 点击任意条目直接复制安装命令</span></div>
     <div class="alt-grid" id="magGrid"></div>
   </div>
+
+  <!-- ============ Codrops 教程库 ============ -->
+  <section id="codrops" style="margin-top:70px;">
+    <div class="sec-head">
+      <span class="eyebrow">TUTORIALS</span>
+      <h2>Codrops 创意实现教程</h2>
+      <span class="sec-count">共 <b id="cdCount">0</b> 篇 · 2009–2026 持续更新 · 每篇附完整 Demo 和源码</span>
+    </div>
+    <div class="cd-filters">
+      <div class="cd-tabs" id="cdTabs"></div>
+      <div class="cd-tags" id="cdTags"></div>
+      <input id="cdSearch" class="cd-search" type="text" placeholder="搜教程：liquid glass、cursor、distortion…">
+    </div>
+    <div class="cd-grid" id="cdGrid"></div>
+    <p class="cd-more" id="cdMore"></p>
+  </section>
 </main>
 
 <footer>
-  <p>数据来源 <b>21st.dev Community</b> · <b>Aceternity UI</b> · <b>Magic UI</b>（均为免费可商用）</p>
+  <p>数据来源 <b>21st.dev Community</b> · <b>Aceternity UI</b> · <b>Magic UI</b> · <b>Codrops</b>（均为免费可商用）</p>
   <p>精选 &amp; 整理于 2026.10 · 本页为纯静态单文件，可离线保存</p>
 </footer>
 
@@ -707,6 +773,87 @@ function buildAlt(elId, arr, copyInstall) {
 }
 buildAlt('aceGrid', ACE, false);
 buildAlt('magGrid', MAG, true);
+
+/* ---------- Codrops 教程库 ---------- */
+const CD = __CD_JSON__;
+const CD_CATS = { tutorials: '教程', playground: 'Playground', blueprints: 'Blueprints', freebies: 'Freebies' };
+const CD_TAGSHOW = ['three-js','webgl','3d','gsap','scroll','menu','slideshow','hover','react-three-fiber','svg','typography','glsl','navigation','grid','distortion','canvas','animation','css','hover-effect','layout'];
+let cdCat = 'all', cdTag = '', cdQ = '', cdShown = 0;
+const CD_PAGE = 24;
+
+const cdGrid = $('cdGrid'), cdTabs = $('cdTabs'), cdTags = $('cdTags'), cdSearch = $('cdSearch');
+
+// 中文标签映射
+const CDTAGCN = { 'three-js':'Three.js','webgl':'WebGL','3d':'3D','gsap':'GSAP','scroll':'滚动','menu':'菜单','slideshow':'轮播','hover':'悬停','react-three-fiber':'R3F','svg':'SVG','typography':'排版','glsl':'GLSL','navigation':'导航','grid':'网格','distortion':'扭曲','canvas':'Canvas','animation':'动画','css':'CSS','hover-effect':'悬停效果','layout':'布局' };
+
+function cdFilter() {
+  return CD.filter(x =>
+    (cdCat === 'all' || x.c === cdCat) &&
+    (!cdTag || (x.t || []).includes(cdTag)) &&
+    (!cdQ || (x.ti + ' ' + x.d + ' ' + (x.t || []).join(' ')).toLowerCase().includes(cdQ))
+  );
+}
+
+function cdRender(reset) {
+  if (reset) cdShown = 0;
+  const list = cdFilter();
+  const slice = list.slice(0, cdShown + CD_PAGE);
+  cdShown = slice.length;
+  cdGrid.innerHTML = slice.map(x => `
+    <a class="cd-card" href="${x.u}" target="_blank" rel="noopener">
+      <div class="cd-thumb">
+        <span class="cd-cat-badge">${CD_CATS[x.c] || x.c}</span>
+        <img loading="lazy" src="${x.i || ''}" alt="">
+      </div>
+      <div class="cd-body">
+        <h3>${esc(x.ti)}</h3>
+        <p class="cd-desc">${esc(x.d || '')}</p>
+        <div class="cd-foot">
+          <div class="cd-tagrow">${(x.t || []).slice(0,3).map(t => `<span>${esc(CDTAGCN[t] || t)}</span>`).join('')}</div>
+          <span class="cd-date">${esc(x.dt || '')}</span>
+        </div>
+      </div>
+    </a>`).join('');
+  $('cdCount').textContent = list.length;
+  $('cdMore').textContent = list.length > cdShown ? `已显示 ${cdShown} / ${list.length} 篇，向下滚动加载更多` : (list.length ? `共 ${list.length} 篇` : '没有匹配的教程');
+}
+
+function buildCdTabs() {
+  const counts = {};
+  CD.forEach(x => counts[x.c] = (counts[x.c] || 0) + 1);
+  const tabs = [['all', `全部 ${CD.length}`], ...Object.entries(CD_CATS).map(([k, n]) => [k, `${n} ${counts[k] || 0}`])];
+  cdTabs.innerHTML = tabs.map(([k, n]) => `<button data-k="${k}" class="${k === 'all' ? 'on' : ''}">${n}</button>`).join('');
+  cdTabs.addEventListener('click', e => {
+    const b = e.target.closest('button'); if (!b) return;
+    cdCat = b.dataset.k;
+    cdTabs.querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b));
+    cdRender(true);
+  });
+  // 标签行
+  cdTags.innerHTML = CD_TAGSHOW.map(t => `<button data-t="${t}">${CDTAGCN[t] || t}</button>`).join('');
+  cdTags.addEventListener('click', e => {
+    const b = e.target.closest('button'); if (!b) return;
+    cdTag = (cdTag === b.dataset.t) ? '' : b.dataset.t;
+    cdTags.querySelectorAll('button').forEach(x => x.classList.toggle('on', x.dataset.t === cdTag));
+    cdRender(true);
+  });
+  let cdTimer;
+  cdSearch.addEventListener('input', () => {
+    clearTimeout(cdTimer);
+    cdTimer = setTimeout(() => { cdQ = cdSearch.value.trim().toLowerCase(); cdRender(true); }, 180);
+  });
+  // 滚动加载
+  const cdIO = new IntersectionObserver(es => {
+    if (es[0].isIntersecting) {
+      const list = cdFilter();
+      if (cdShown < list.length) cdRender(false);
+    }
+  }, { rootMargin: '400px' });
+  cdIO.observe($('cdMore'));
+}
+
+buildCdTabs();
+cdRender(true);
 
 /* ---------- 跑马灯 ---------- */
 (function buildMarquee() {

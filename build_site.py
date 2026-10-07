@@ -65,6 +65,42 @@ mag = [{'t': m.replace('-', ' ').title(),
         'u': 'https://magicui.design/docs/components/' + m,
         'i': 'npx shadcn@latest add "https://magicui.design/r/%s.json"' % m} for m in magicui]
 
+# ---- Codrops 教程库 ----
+cd_raw = []
+try:
+    cd_raw = json.load(open('/tmp/codrops_tuts_full.json'))
+    cd_raw += json.load(open('/tmp/codrops_extra.json'))
+except FileNotFoundError:
+    pass
+
+def cd_date(s):
+    # 'Sep 24, 2026' -> '2026.09.24'
+    import re
+    months = {'Jan':'01','Feb':'02','Mar':'03','Apr':'04','May':'05','Jun':'06','Jul':'07','Aug':'08','Sep':'09','Oct':'10','Nov':'11','Dec':'12'}
+    m = re.match(r'([A-Z][a-z]{2})\s+(\d{1,2}),\s+(\d{4})', s or '')
+    if m:
+        return f'{m.group(3)}.{months.get(m.group(1),"??")}.{int(m.group(2)):02d}'
+    return (s or '')[:10]
+
+cd = []
+for x in cd_raw:
+    if x.get('cat') and x.get('cat') != 'tutorials':
+        c = x['cat']
+    else:
+        c = 'tutorials'
+    cd.append({
+        'c': c,
+        'ti': clean(x.get('title')),
+        'u': x['url'],
+        'i': x.get('img'),
+        'd': clean(x.get('desc'))[:160],
+        'dt': cd_date(x.get('date', '')),
+        't': [clean(t) for t in (x.get('tags') or [])[:6]],
+    })
+# 去重
+seen = set(); cd = [x for x in cd if not (x['u'] in seen or seen.add(x['u']))]
+print('codrops items:', len(cd))
+
 def js_json(obj):
     return json.dumps(obj, ensure_ascii=False, separators=(',', ':')).replace('</', '<\\/')
 
@@ -76,6 +112,7 @@ out = (tpl
     .replace('__DATA_JSON__', js_json(data))
     .replace('__ACE_JSON__', js_json(ace))
     .replace('__MAG_JSON__', js_json(mag))
+    .replace('__CD_JSON__', js_json(cd))
     .replace('__CAT_JSON__', js_json([{'k': k, 'n': n} for k, n in cat_meta])))
 
 path = os.path.join(BASE, 'index.html')
