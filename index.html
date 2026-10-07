@@ -92,6 +92,28 @@ button { font-family: inherit; cursor: pointer; }
   max-width: 1320px; margin: 0 auto; padding: 14px 28px;
   display: flex; align-items: center; justify-content: space-between;
 }
+/* 板块导航 */
+.view-nav { display: flex; gap: 4px; margin-left: auto; margin-right: 18px; }
+.view-nav button {
+  background: transparent; border: 1px solid transparent; color: var(--txt2);
+  border-radius: 10px; padding: 7px 14px; font-size: 13px; font-weight: 500;
+  display: inline-flex; align-items: center; gap: 7px; transition: all .2s;
+}
+.view-nav button .nv-n {
+  font-size: 10px; font-weight: 600; color: var(--txt3);
+  background: rgba(255,255,255,.06); border-radius: 99px; padding: 1px 7px;
+  transition: all .2s;
+}
+.view-nav button:hover { color: var(--txt); background: rgba(255,255,255,.05); }
+.view-nav button.on {
+  color: #fff; background: linear-gradient(135deg, rgba(139,92,246,.28), rgba(34,211,238,.16));
+  border-color: rgba(139,92,246,.5);
+}
+.view-nav button.on .nv-n { color: #c4b5fd; background: rgba(139,92,246,.2); }
+/* 视图切换 */
+.view { display: none; }
+.view.on { display: block; animation: viewIn .3s ease; }
+@keyframes viewIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 .brand { display: flex; align-items: center; gap: 12px; }
 .brand-mark {
   width: 34px; height: 34px; border-radius: 10px; flex-shrink: 0;
@@ -433,6 +455,15 @@ footer b { color: var(--txt2); font-weight: 500; }
 .js .card.reveal { transition: opacity .55s ease var(--d, 0ms), transform .35s cubic-bezier(.2,.7,.3,1) var(--d, 0ms), box-shadow .35s; }
 .js .card.reveal:hover { transition-delay: 0ms; transform: translateY(-5px); }
 
+@media (max-width: 860px) {
+  .hdr-in { padding: 10px 14px; flex-wrap: wrap; gap: 8px; }
+  .brand-txt small { display: none; }
+  .view-nav { order: 3; width: 100%; overflow-x: auto; margin: 0; padding-bottom: 2px; scrollbar-width: none; }
+  .view-nav::-webkit-scrollbar { display: none; }
+  .view-nav button { flex-shrink: 0; padding: 6px 11px; font-size: 12.5px; }
+  .hdr-count { display: none; }
+}
+
 @media (max-width: 720px) {
   .hero { padding-top: 56px; }
   main { padding: 10px 16px 60px; }
@@ -533,15 +564,21 @@ footer b { color: var(--txt2); font-weight: 500; }
 
 <header id="hdr">
   <div class="hdr-in">
-    <a class="brand" href="#">
+    <a class="brand" href="#library" data-view="library">
       <span class="brand-mark">✦</span>
       <span class="brand-txt"><b>组件武器库</b><small>COMPONENT&nbsp;VAULT</small></span>
     </a>
+    <nav class="view-nav" id="viewNav">
+      <button data-view="library" class="on">组件库<span class="nv-n">552</span></button>
+      <button data-view="more">免费库<span class="nv-n">189</span></button>
+      <button data-view="codrops">教程<span class="nv-n">524</span></button>
+      <button data-view="gsap">GSAP<span class="nv-n">8</span></button>
+    </nav>
     <span class="hdr-count" id="liveCount"><b>552</b> / 552</span>
   </div>
 </header>
 
-<section class="hero">
+<section class="hero" id="heroSec">
   <div class="badge reveal">552 个免费高颜值 React 组件 · 官方精选</div>
   <h1 class="reveal" style="--d:60ms">组件<span class="grad">武器库</span></h1>
   <p class="sub reveal" style="--d:120ms">好看、高级、现代化的界面拼图。<b>悬停即可预览动效</b>，一键复制命令把代码装进项目 —— 接单直接抄。</p>
@@ -562,9 +599,11 @@ footer b { color: var(--txt2); font-weight: 500; }
   <div class="chips-wrap" id="chipsWrap"><div class="chips" id="chips"></div></div>
 </section>
 
-<div class="marquee"><div class="marquee-track" id="marquee"></div></div>
+<div class="marquee" id="marqueeSec"><div class="marquee-track" id="marquee"></div></div>
 
 <main>
+  <!-- ======== 视图：组件库 ======== -->
+  <div class="view on" id="view-library">
   <section class="sec" id="gridSec">
     <div class="sec-head">
       <span class="eyebrow">GALLERY</span>
@@ -578,7 +617,10 @@ footer b { color: var(--txt2); font-weight: 500; }
       <button id="clearFilters">清除搜索和筛选</button>
     </div>
   </section>
+  </div>
 
+  <!-- ======== 视图：更多免费库 ======== -->
+  <div class="view" id="view-more">
   <p class="alt-note">武器库没合适的？这两个同款免费库也值得一逛 ——</p>
   <div class="alt-panel reveal">
     <div class="alt-head"><b>Aceternity UI</b><span>112 个 · 动效与 3D 炫技向</span></div>
@@ -588,9 +630,10 @@ footer b { color: var(--txt2); font-weight: 500; }
     <div class="alt-head"><b>Magic UI</b><span>77 个 · 点击任意条目直接复制安装命令</span></div>
     <div class="alt-grid" id="magGrid"></div>
   </div>
+  </div>
 
-  <!-- ============ Codrops 教程库 ============ -->
-  <section id="codrops" style="margin-top:70px;">
+  <!-- ======== 视图：Codrops 教程 ======== -->
+  <div class="view" id="view-codrops">
     <div class="sec-head">
       <span class="eyebrow">TUTORIALS</span>
       <h2>Codrops 创意实现教程</h2>
@@ -603,10 +646,10 @@ footer b { color: var(--txt2); font-weight: 500; }
     </div>
     <div class="cd-grid" id="cdGrid"></div>
     <p class="cd-more" id="cdMore"></p>
-  </section>
+  </div>
 
-  <!-- ============ GSAP AI Skills ============ -->
-  <section id="gsap" style="margin-top:70px;">
+  <!-- ======== 视图：GSAP Skills ======== -->
+  <div class="view" id="view-gsap">
     <div class="sec-head">
       <span class="eyebrow">GSAP SKILLS</span>
       <h2>GSAP 官方 AI Skills</h2>
@@ -618,7 +661,7 @@ footer b { color: var(--txt2); font-weight: 500; }
       AI 写动画就自带官方最佳实践。装法：<code style="color:#7ee7f5;">npx skills add greensock/gsap-skills</code> 或克隆到 <code style="color:#7ee7f5;">~/.claude/skills/</code>。
     </p>
     <div class="gs-grid" id="gsGrid"></div>
-  </section>
+  </div>
 </main>
 
 <footer>
@@ -944,6 +987,38 @@ window.addEventListener('scroll', () => {
   toTop.classList.toggle('show', scrollY > 700);
 }, { passive: true });
 toTop.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
+
+/* ---------- 板块视图切换 ---------- */
+const VIEWS = ['library', 'more', 'codrops', 'gsap'];
+function switchView(name, push) {
+  if (!VIEWS.includes(name)) name = 'library';
+  VIEWS.forEach(v => {
+    const el = $('view-' + v);
+    if (el) el.classList.toggle('on', v === name);
+  });
+  document.querySelectorAll('#viewNav button').forEach(b =>
+    b.classList.toggle('on', b.dataset.view === name));
+  // hero / 跑马灯只在组件库视图显示
+  $('heroSec').style.display = (name === 'library') ? '' : 'none';
+  $('marqueeSec').style.display = (name === 'library') ? '' : 'none';
+  // liveCount 只在组件库有意义
+  $('liveCount').style.display = (name === 'library') ? '' : 'none';
+  if (push !== false) history.replaceState(null, '', '#' + name);
+  scrollTo({ top: 0 });
+  // 切到 codrops 视图时确保首屏渲染
+  if (name === 'codrops') setTimeout(() => { const m = $('cdMore'); if (m) m.getBoundingClientRect(); }, 50);
+}
+$('viewNav').addEventListener('click', e => {
+  const b = e.target.closest('button[data-view]'); if (!b) return;
+  switchView(b.dataset.view);
+});
+document.querySelector('.brand').addEventListener('click', e => {
+  e.preventDefault();
+  switchView('library');
+});
+window.addEventListener('hashchange', () => switchView(location.hash.slice(1), false));
+const initHash = location.hash.slice(1);
+if (initHash && VIEWS.includes(initHash)) switchView(initHash, false);
 
 /* ---------- 数字滚动 ---------- */
 document.querySelectorAll('[data-count]').forEach(el => {
