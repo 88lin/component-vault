@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-"""组件武器库 V2 - 生成脚本"""
+"""组件武器库 V3 - 生成脚本（59 分类全量）"""
 import json, os
 
 BASE = os.path.dirname(os.path.abspath(__file__))
-final = json.load(open('/tmp/21st_final.json'))
+final = json.load(open('/tmp/21st_final_v3.json'))
 aceternity = json.load(open('/tmp/aceternity.json'))
 
 magicui = ['android','animated-beam','animated-circular-progress-bar','animated-gradient-text',
@@ -24,11 +24,24 @@ cat_meta = [
     ('all', '全部'), ('hero', '首屏 Hero'), ('pricing-section', '定价区'),
     ('testimonials', '客户评价'), ('ai-chat', 'AI 对话'), ('features', '特性展示'),
     ('cta', '行动号召'), ('shader', '着色器背景'), ('3d', '3D 立体'),
-    ('glassmorphism', '玻璃拟态'), ('bento', 'Bento 网格'), ('text', '文字特效'),
-    ('animation', '动效'), ('carousel', '轮播'), ('card', '卡片'),
+    ('glassmorphism', '玻璃拟态'), ('liquid-glass', '液态玻璃'), ('bento', 'Bento 网格'),
+    ('text', '文字特效'), ('animation', '动效'), ('carousel', '轮播'), ('card', '卡片'),
     ('dashboard', '仪表盘'), ('navbar', '导航栏'), ('button', '按钮'),
     ('loader', '加载动画'), ('footer', '页脚'), ('toggle', '开关'),
     ('tag', '标签徽章'), ('input', '输入控件'), ('table', '表格'), ('calendar', '日历'),
+    # 新增分类
+    ('coming-soon', '上线倒计时页'), ('404', '404 页面'), ('login', '登录页'),
+    ('sign-up', '注册页'), ('faq', 'FAQ 问答'), ('stats', '数据统计'),
+    ('timeline', '时间线'), ('roadmap', '路线图'), ('logo-cloud', 'Logo 墙'),
+    ('logo-marquee', 'Logo 跑马灯'), ('marquee', '跑马灯'), ('countdown', '倒计时'),
+    ('waitlist', 'Waitlist'), ('comparison-slider', '对比滑块'), ('video-background', '视频背景'),
+    ('sidebar', '侧边栏'), ('tabs', '选项卡'), ('accordion', '手风琴'),
+    ('modal', '弹窗'), ('dropdown', '下拉菜单'), ('tooltip', '气泡提示'),
+    ('mega-menu', '超级菜单'), ('portfolio', '作品集'), ('profile-card', '个人卡片'),
+    ('empty-state', '空状态'), ('parallax', '视差'), ('particle', '粒子'),
+    ('cursor-trail', '光标拖尾'), ('sphere', '球体'), ('globe', '3D 地球'),
+    ('holographic', '全息'), ('glitch', '故障风'), ('neon', '霓虹'),
+    ('dock', 'Dock 栏'),
 ]
 
 def clean(s):
@@ -68,3 +81,4 @@ out = (tpl
 path = os.path.join(BASE, 'index.html')
 open(path, 'w', encoding='utf-8').write(out)
 print('written:', path, '%.0f KB' % (os.path.getsize(path) / 1024))
+print('items:', len(data), '| cats:', len(cat_meta) - 1)
